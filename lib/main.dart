@@ -35,21 +35,24 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () => showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return Container(
-                height: 200,
-                child: TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Close'),
-                ),
-              );
-            },
-          ),
-          child: const Text('showModalBottomSheet'),
+      body: SizedBox.expand(
+        child: DraggableScrollableSheet(
+          initialChildSize: 0.75,
+          minChildSize: 0.15,
+          maxChildSize: 0.9,
+          snap: true,
+          builder: (BuildContext context, ScrollController scrollController) {
+            return Container(
+              color: Colors.blue[100],
+              child: ListView.builder(
+                controller: scrollController,
+                itemCount: 25,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(title: Text('Item $index'));
+                },
+              ),
+            );
+          },
         ),
       ),
     );
